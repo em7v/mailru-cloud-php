@@ -14,6 +14,8 @@
         "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
-        "Friday14\\Mailru": "src/"
+        "psr-4": {
+            "Friday14\\Mailru\\": "/src"
+        }
     }
 }
