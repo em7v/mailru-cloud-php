@@ -1,6 +1,6 @@
 <?php
 
-namespace Friday14\Mailru\Cloud;
+namespace Friday14\Mailru;
 
 
 trait AuthTrait

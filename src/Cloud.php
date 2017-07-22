@@ -1,6 +1,6 @@
 <?php
 
-namespace Friday14\Mailru\Cloud;
+namespace Friday14\Mailru;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\MultipartStream;
@@ -14,7 +14,7 @@ use SplFileObject;
  *
  */
 
-class Client
+class Cloud
 {
     /**
      * Consts
