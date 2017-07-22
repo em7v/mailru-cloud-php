@@ -1,6 +1,6 @@
 <?php
 
-namespace Friday14\CloudMailRu;
+namespace Friday14\Mailru\Cloud;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\MultipartStream;

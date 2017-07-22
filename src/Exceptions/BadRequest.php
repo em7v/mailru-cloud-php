@@ -6,7 +6,7 @@
  * Time: 23:51
  */
 
-namespace Friday14\CloudMailRu\Exceptions;
+namespace Friday14\Mailru\Cloud\Exceptions;
 
 use Psr\Http\Message\ResponseInterface;
 

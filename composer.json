@@ -14,6 +14,6 @@
         "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
-        "\\Friday14\\CloudMailRu": "/src"
+        "\\Friday14\\Mailru\\Cloud": "/src"
     }
 }
