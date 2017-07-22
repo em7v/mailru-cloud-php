@@ -1,0 +1,19 @@
+{
+    "name": "friday14/cloud-mail-ru",
+    "description": "Client for Cloud mail.ru",
+    "keywords": ["mail.ru", "cloud"],
+    "type": "library",
+    "authors": [
+        {
+            "name": "Evgeniy Marthenov",
+            "email": "evgeniy.marthenov@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "\\Friday14\\CloudMailRu": "/src"
+    }
+}
