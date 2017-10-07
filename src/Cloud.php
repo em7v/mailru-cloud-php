@@ -26,7 +26,17 @@ class Cloud
     const DOWNLOAD_URL = 'https://cloclo27.datacloudmail.ru/';
 
     protected $client;
+    
+    protected $userAgent = 'Mozilla / 5.0(Windows; U; Windows NT 5.1; en - US; rv: 1.9.0.1) Gecko / 2008070208 Firefox / 3.0.1';
+    protected $isAuth;
+    protected $email;
+    protected $login;
+    protected $password;
+    protected $domain;
 
+    protected $token;
+    protected $tokenLifeTime;
+    
     //Traits
     use AuthTrait;
 
