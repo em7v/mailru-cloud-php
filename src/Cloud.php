@@ -9,8 +9,8 @@ use SplFileObject;
 /**
  * Client to work with https://cloud.mail.ru
  *
- * @author Evgeniy Marthenov
- * @author Evgeniy Marthenov <evgeniy.marthenov@gmail.com>
+ * @author Evgeny Martyanov
+ * @author Evgeny Martyanov <evgeniy.marthenov@gmail.com>
  *
  */
 
@@ -23,7 +23,7 @@ class Cloud
     const CLOUD_DOMAIN = 'https://cloud.mail.ru/api/v2';
     const FETCH_TOKEN_URL = 'https://cloud.mail.ru/api/v2/tokens/csrf';
     const UPLOAD_URL = 'https://cloclo3-upload.cloud.mail.ru/upload/';
-    const DOWNLOAD_URL = 'https://cloclo27.datacloudmail.ru/';
+    const DOWNLOAD_URL = 'https://cloclo17.datacloudmail.ru/';
 
     protected $client;
 
@@ -143,7 +143,9 @@ class Cloud
      *
      * @param string $path
      * @param string $name
+     *
      * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function rename($path, $name)
     {
@@ -158,16 +160,18 @@ class Cloud
      * Uploads your files in Cloud
      *
      * @param SplFileObject $file
-     * @param string|null $filename
-     * @param string $saveFolder
+     * @param string|null   $filename
+     * @param string        $saveFolder
+     *
      * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function upload(SplFileObject $file, $filename = null, $saveFolder = '/')
     {
         $fileName = ($filename == null) ? $file->getBasename() : $filename;
         $fileSize = $file->getSize();
-        $stream = fopen($file->getRealPath(), 'r');
-        $boundary = uniqid($fileName . $fileSize);
+        $stream = fopen($file->getRealPath(), 'rb');
+        $boundary = uniqid($fileName . $fileSize, true);
 
         $params = [
             'query' => [
@@ -197,13 +201,15 @@ class Cloud
     /**
      * Download your files of Cloud
      *
-     * @param string $path File which the your want download
+     * @param string $path     File which the your want download
      * @param string $savePath Local Path for save the file
+     *
      * @return bool
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function download($path, $savePath)
     {
-        $res = $this->client->request('GET', self::DOWNLOAD_URL . "get{$path}", ['sink' => $_SERVER['DOCUMENT_ROOT'] . $savePath]);
+        $res = $this->client->request('GET', self::DOWNLOAD_URL . "get{$path}", ['sink' => $savePath]);
         return $res->getStatusCode() === 200;
     }
 
@@ -212,7 +218,9 @@ class Cloud
      * Set publish flag a file or folder
      *
      * @param string $path
+     *
      * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function publishFile($path)
     {
@@ -234,6 +242,15 @@ class Cloud
     }
 
 
+    /**
+     * @param $folder
+     * @param $filename
+     * @param $hash
+     * @param $filesize
+     *
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     protected function confirmUpload($folder, $filename, $hash, $filesize)
     {
         return $this->request('/file/add', 'POST', [
@@ -244,6 +261,16 @@ class Cloud
         ]);
     }
 
+    /**
+     * @param       $uri
+     * @param       $method
+     * @param array $params
+     * @param null  $enctype
+     * @param bool  $defaultParams
+     *
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     protected function request($uri, $method, array $params, $enctype = null, $defaultParams = true)
     {
         $url = $this->formatUrl($uri);
@@ -251,10 +278,10 @@ class Cloud
         $default = $this->structureRequestParams();
         $payload = ($defaultParams) ? array_merge($default, $params) : $params;
 
-        if ($enctype == 'multipart')
+        if ($enctype === 'multipart')
             $params = $this->formatMultipartData($payload);
         else
-            $params = (strtoupper($method) == 'GET') ? ['query' => $payload] : ['form_params' => $payload];
+            $params = (strtoupper($method) === 'GET') ? ['query' => $payload] : ['form_params' => $payload];
 
         $res = $this->client->request($method, $url, $params);
         return json_decode($res->getBody()->getContents());

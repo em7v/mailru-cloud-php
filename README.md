@@ -1,67 +1,64 @@
-# Sdk for Cloud mail.ru
-Sdk for work with cloud mail.ru
+# Sdk для работы с облаком  mail.ru
 
-
-## Installation
-You can install the package via composer:
+## Установка с помощью composer:
 ``` bash
 composer require friday14/cloud-mail-ru dev-master
 ```
-## Usage
 
-The first thing you need to do is create example class Cloud. 
+## Использование
+
 ``` php
 $cloud = new \Friday14\Mailru\Cloud('yourLogin', 'yourPassword', 'yourDomain');
 ``` 
-example
+Пример:
 ``` php
 $cloud = new \Friday14\Mailru\Cloud('friday14', 'password', 'mail.ru');
 ```
 
-### Methods
+### Методы
 
-<b> files($path) </b> - Get all files which in this folder
+**files($path)**  - Получить все файлы из заданного каталога
 ``` php
 $cloud->files('/cloud-root');
 ```
 
-<b> createFile($path, $content) </b> - Create text file with your content 
+**createFile($path, $content)** - Создать файл с заданным контентом
 ``` php
-$cloud->createFile('/ololo.txt','String String');
+$cloud->createFile('/ololo.txt','Hello World');
 ```
 
-<b> createFolder($path) </b> - Create a folder in your Storage Cloud
+**createFolder($path)** - Создать папку в облаке
 ``` php
-$cloud->createFolder(/'new folder');
+$cloud->createFolder('/foldername');
 ```
 
-<b> delete($path) </b> - Delete a file or folder of your Storage
+**delete($path)** - Удалить папку/файл
 ``` php 
 $cloud->delete('/wallaper.jpg');
 ```
 
-<b> rename($path, $name) </b> - Rename file
+**rename($path, $name)** - Переименновать папку/файл
 ``` php
 $cloud->rename('/cloud-folder/wallaper.jpg', 'newName.jpg');
 ```
 
-<b> upload(SplFileObject $file, $filename = null) </b> - Uploads your files in Cloud (If you specify a folder in the path that does not exist, it will be created before the download)
+ **upload(SplFileObject $file, $filename = null)**  - Uploads your files in Cloud (If you specify a folder in the path that does not exist, it will be created before the download)
 ``` php
     $file = new SplFileObject($_SERVER['DOCUMENT_ROOT'] . '/teremok.jpg');
     $cloud->upload($file, '/wallapers/super-teremok.jpg');
 ```
 
-<b> download($path, $savePath) </b> - Download your files of Cloud
+ **download($path, $savePath)**  - Загрузить файл.
 ``` php 
-  $cloud->download('/wallapers/super-teremok.jpg', $_SERVER['DOCUMENT_ROOT'] . '/public');
+  $cloud->download('/wallapers/super-teremok.jpg', $_SERVER['DOCUMENT_ROOT'] . '/folder/filename.format');
 ```
 
-<b> publishFile($path) </b> - Set publish flag a file or folder
+ **publishFile($path)**  - Сделать файл общедоступным
 ``` php
   $cloud->publishFile('/wallapers/super-teremok.jpg');
 ```
 
-<b> getLink($path) </b> - Set publish flag and return public link a file
+ **getLink($path)**  - Сделать файл общедоступным и получить ссылку на файл
 ``` php
   $cloud->getLink('/wallapers/super-teremok.jpg') // return https://cloclo4.cloud.mail.ru/thumb/xw1/wallapers/super-teremok.jpg
 ```
