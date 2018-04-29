@@ -50,6 +50,5 @@ trait AuthTrait
         $this->token = $data->body->token;
         $this->tokenLifeTime = $data->time;
         $this->email = $data->email;
-
     }
 }
